@@ -23,7 +23,7 @@ previous_data = data.copy()
 data = data[data.charges < 50000]
 data.reset_index(drop=True, inplace=True)
 
-#
+
 labelencoder_X = LabelEncoder()
 data['sex'] = labelencoder_X.fit_transform(data['sex'])
 data['smoker'] = labelencoder_X.fit_transform(data['smoker'])

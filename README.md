@@ -73,5 +73,5 @@ Feel free to mail me for any doubts/query ✉️ anikesadia01@gmail.com
 
 
 # ❤️ Owner
-Made with ❤️  by MEMUDU Alimatou Sadia Anike.
+Made with ❤️ by MEMUDU Alimatou Sadia Anike.
 

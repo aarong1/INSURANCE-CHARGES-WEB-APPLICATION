@@ -3,18 +3,18 @@ import pickle
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
-model = pickle.load(open("model.pkl", 'rb'))
+
 
 
 @app.route('/')
 def index():
     return render_template(
         'index.html',
-        data=[{'gender': 'Gender'}, {'gender': 'female'}, {'gender': 'male'}],
-        data1=[{'noc': 'Number of Children'}, {'noc': 0}, {'noc': 1}, {'noc': 2}, {'noc': 3}, {'noc': 4}, {'noc': 5}],
-        data2=[{'smoke': 'Smoking Status'}, {'smoke': 'yes'}, {'smoke': 'no'}],
-        data3=[{'region': "Region"}, {'region': "northeast"}, {'region': "northwest"},
-               {'region': 'southeast'}, {'region': "southwest"}])
+        data=[{'registry': 'Registry'}, {'registry': 'vcs'}, {'registry': 'gsr'}],
+        data1=[{'vintage': 'Vintage'}, {'vintage': 0}, {'vintage': 1}, {'vintage': 2}, {'vintage': 3}, {'vintage': 4}, {'vintage': 5}],
+        data2=[{'sector': 'Sector'}, {'sector': 'Forestry'}, {'sector': 'Household'}],
+        data3=[{'country': "Brazil"}, {'country': "Peru"}, {'country': "Indonesia"},
+               {'country': 'United States'}, {'country': "China"}])
 
 
 @app.route("/predict", methods=['GET', 'POST'])
@@ -25,9 +25,9 @@ def predict():
     else:
         print(ValueError)
 
-    if input_data[1] == 'female':
+    if input_data[1] == 'vcs':
         input_data[1] = 0
-    elif input_data[1] == 'male':
+    elif input_data[1] == 'gsr':
         input_data[1] = 1
     else:
         print(ValueError)
@@ -39,29 +39,26 @@ def predict():
     else:
         print(ValueError)
 
-    if input_data[5] == 'northeast':
+    if input_data[5] == 'Brazil':
         input_data[5] = 0
-    elif input_data[5] == 'northwest':
+    elif input_data[5] == 'Peru':
         input_data[5] = 1
-    elif input_data[5] == 'southeast':
+    elif input_data[5] == 'United States':
         input_data[5] = 2
-    elif input_data[5] == 'southwest':
+    elif input_data[5] == 'China':
         input_data[5] = 3
     else:
         print(ValueError)
 
-    input_values = [x for x in input_data]
-    arr_val = [np.array(input_values)]
-    prediction = model.predict(arr_val)
-    output = round(prediction[0], 3)
-    return render_template('index.html', prediction_text=" The predicted insurance charges is {}".format(output),
-                           data=[{'gender': 'Gender'}, {'gender': 'female'}, {'gender': 'male'}],
-                           data1=[{'noc': 'Number of Children'}, {'noc': 0}, {'noc': 1}, {'noc': 2}, {'noc': 3},
-                                  {'noc': 4}, {'noc': 5}],
-                           data2=[{'smoke': 'Smoking Status'}, {'smoke': 'yes'}, {'smoke': 'no'}],
-                           data3=[{'region': "Region"}, {'region': "northeast"}, {'region': "northwest"},
-                                  {'region': 'southeast'}, {'region': "southwest"}])
 
+
+    output = input_data[5]
+    return render_template('index.html', prediction_text=" The predicted insurance charges is {}".format(output),
+                           data=[{'registry': 'Registry'}, {'registry': 'vcs'}, {'registry': 'gsr'}],
+        data1=[{'vintage': 'Vintage'}, {'vintage': 0}, {'vintage': 1}, {'vintage': 2}, {'vintage': 3}, {'vintage': 4}, {'vintage': 5}],
+        data2=[{'sector': 'Sector'}, {'sector': 'Forestry'}, {'sector': 'Household'}],
+        data3=[{'country': "Brazil"}, {'country': "Peru"}, {'country': "Indonesia"},
+               {'country': 'United States'}, {'country': "China"}])
 
 if __name__ == '__main__':
     app.run(debug=True)
